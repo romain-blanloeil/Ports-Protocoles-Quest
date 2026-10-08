@@ -2,7 +2,7 @@
 
 Quiz web pour réviser les **ports et protocoles réseau** vus en formation TSSR (Technicien Supérieur Systèmes et Réseaux) à l'ENI École Informatique, Nantes.
 
-🔗 **Démo en ligne** : https://ports-protocoles-quest.blanloeil.com
+🔗 **Lien vers le site** : https://ports-protocoles-quest.blanloeil.com
 
 ## Fonctionnalités
 

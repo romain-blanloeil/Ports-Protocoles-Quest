@@ -1,0 +1,68 @@
+Port;Transport;Service;Description;Categorie;Exemple;Note;Niveau
+67;UDP;DHCP;Attribution automatique d'adresses IP (côté serveur, étapes DORA);Network;;;Rookie
+68;UDP;DHCP;Attribution automatique d'adresses IP (côté client, étapes DORA);Network;;;Rookie
+Aucun;-;ICMP;Diagnostic réseau (ping, traceroute), protocole IP numéro 1 sans port;Network;ping 8.8.8.8 ou tracert 8.8.8.8;;Expert
+Aucun;-;ARP;Résolution d'une adresse IP en adresse MAC sur le réseau local;Network;arp -a;;Expert
+53;TCP/UDP;DNS;Résolution de noms de domaine en adresses IP;Network;;;Rookie
+123;UDP;NTP;Synchronisation de l'heure des équipements;Network;;;Rookie
+4460;TCP;NTS-KE;Échange de clés pour sécuriser NTP (Network Time Security);Network;;;Expert
+22;TCP;SSH;Accès distant sécurisé en ligne de commande, tunnel chiffré;Secure Remote;;;Rookie
+23;TCP;Telnet;Accès distant non chiffré (obsolète, à éviter);Secure Remote;;;Rookie
+3389;TCP/UDP;RDP;Bureau à distance Windows;Secure Remote;;;Rookie
+5985;TCP;WinRM;Administration à distance Windows en HTTP (PowerShell remoting);Secure Remote;;;Expert
+5986;TCP;WinRM;Administration à distance Windows en HTTPS (PowerShell remoting);Secure Remote;;;Expert
+5900;TCP;VNC;Prise de contrôle du bureau à distance (protocole RFB);Secure Remote;;;Expert
+1194;UDP;OpenVPN;Tunnel VPN open source chiffré (TLS);Secure Remote;;;Rookie
+500;UDP;IPsec;VPN, négociation des clés avec IKE;Secure Remote;;;Expert
+4500;UDP;IPsec;VPN, traversée de NAT (NAT-T);Secure Remote;;;Expert
+389;TCP/UDP;LDAP;Annuaire réseau (Active Directory, OpenLDAP);Identity;;;Rookie
+636;TCP;LDAPS;Annuaire réseau chiffré avec TLS;Identity;;;Rookie
+88;TCP/UDP;Kerberos;Authentification par tickets (Active Directory);Identity;;;Rookie
+464;TCP/UDP;Kerberos;Changement de mot de passe Kerberos (kpasswd);Identity;;;Expert
+3268;TCP;Catalogue global;Recherche dans toute la forêt AD (LDAP);Identity;;;Expert
+3269;TCP;Catalogue global;Recherche dans toute la forêt AD (LDAPS);Identity;;;Expert
+135;TCP;RPC;Appels de procédures à distance Windows (Endpoint Mapper);Identity;;;Expert
+137;UDP;NetBIOS;Service de noms (résolution de noms Windows, ancien);Identity;;;Rookie
+138;UDP;NetBIOS;Service de datagrammes (ancien);Identity;;;Rookie
+139;TCP;NetBIOS;Service de session, partages Windows (ancien);Identity;;;Rookie
+1812;UDP;RADIUS;Authentification et autorisation centralisées (AAA);Identity;;;Expert
+1813;UDP;RADIUS;Comptabilité des accès (AAA);Identity;;;Expert
+69;UDP;TFTP;Transfert simple sans authentification (firmware, boot PXE, configs d'équipements);Transfert;;;Rookie
+20;TCP;FTP;Transfert de fichiers, connexion de données (mode actif);Transfert;;;Rookie
+21;TCP;FTP;Transfert de fichiers, connexion de contrôle (commandes);Transfert;;;Rookie
+989;TCP;FTPS;FTP sur TLS en mode implicite, données;Transfert;;;Expert
+990;TCP;FTPS;FTP sur TLS en mode implicite, contrôle;Transfert;;;Expert
+22;TCP;SFTP;Transfert de fichiers chiffré via SSH;Transfert;;;Expert
+22;TCP;SCP;Copie de fichiers chiffrée via SSH;Transfert;;;Expert
+873;TCP;Rsync;Synchronisation de fichiers par différences (démon rsync, 22 via SSH);Transfert;;;Expert
+80;TCP;HTTP;Navigation web non chiffrée;Web & Database;;;Rookie
+443;TCP;HTTPS;Navigation web chiffrée avec TLS;Web & Database;;;Rookie
+443;UDP;QUIC;Transport rapide et chiffré, base de HTTP/3;Web & Database;;;Expert
+3306;TCP;MySQL/MariaDB;Base de données relationnelle MySQL ou MariaDB;Web & Database;;;Rookie
+5432;TCP;PostgreSQL;Base de données relationnelle PostgreSQL;Web & Database;;;Rookie
+1433;TCP;TDS;Protocole de Microsoft SQL Server (Tabular Data Stream);Web & Database;;;Expert
+3128;TCP;Proxy;Serveur mandataire web (port par défaut de Squid);Web & Database;;Usage courant;Expert
+8080;TCP;Proxy;Serveur mandataire web (port alternatif HTTP courant);Web & Database;;;Expert
+445;TCP;SMB;Partages de fichiers et d'imprimantes Windows;Share & Storage;;;Rookie
+2049;TCP;NFS;Partages de fichiers Unix et Linux (Network File System);Share & Storage;;;Expert
+4420;TCP;NVMe-oF;Accès à du stockage NVMe à travers le réseau (NVMe over Fabrics);Share & Storage;;;Expert
+3260;TCP;iSCSI;Stockage en mode bloc sur réseau IP (SAN);Share & Storage;;;Expert
+Aucun;-;FCoE;Fibre Channel encapsulé dans Ethernet (couche 2, sans port);Share & Storage;fcoeadm -i (Linux);;Expert
+3225;TCP;FCIP;Tunnel de Fibre Channel à travers un réseau IP (liaison entre SAN);Share & Storage;;;Expert
+161;UDP;SNMP;Supervision et gestion des équipements réseau (requêtes vers l'agent);Monitoring;;;Rookie
+162;UDP;SNMP Trap;Alertes envoyées par les équipements vers le serveur de supervision;Monitoring;;;Rookie
+5666;TCP;NRPE;Exécution de sondes Nagios à distance (Nagios Remote Plugin Executor);Monitoring;;Usage courant;Expert
+2055;UDP;NetFlow;Export des statistiques de flux réseau (Cisco);Monitoring;;Usage courant;Expert
+135;TCP;WMI;Supervision et administration de machines Windows (via RPC et DCOM);Monitoring;;;Expert
+5988;TCP;CIM;Gestion standardisée du matériel (WBEM) en HTTP;Monitoring;;;Expert
+5989;TCP;CIM;Gestion standardisée du matériel (WBEM) en HTTPS;Monitoring;;;Expert
+514;UDP;Syslog;Centralisation des journaux système;Monitoring;;;Rookie
+6514;TCP;Syslog TLS;Centralisation des journaux système chiffrée avec TLS;Monitoring;;;Expert
+25;TCP;SMTP;Envoi d'emails entre serveurs de messagerie;Messagerie;;;Rookie
+587;TCP;SMTP;Envoi d'emails depuis un client (soumission, STARTTLS et authentification);Messagerie;;;Expert
+465;TCP;SMTPS;Envoi d'emails chiffré (TLS implicite);Messagerie;;;Rookie
+110;TCP;POP3;Récupération d'emails en les téléchargeant sur le poste;Messagerie;;;Rookie
+995;TCP;POP3S;Récupération d'emails chiffrée avec TLS;Messagerie;;;Expert
+143;TCP;IMAP;Accès aux emails laissés sur le serveur (synchronisés);Messagerie;;;Rookie
+993;TCP;IMAPS;Accès aux emails sur le serveur, chiffré avec TLS;Messagerie;;;Expert
+119;TCP;NNTP;Groupes de discussion Usenet;Messagerie;;;Rookie

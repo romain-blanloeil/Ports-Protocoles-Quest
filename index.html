@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiz Ports & Protocoles</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>🔌 Quiz Ports &amp; Protocoles</h1>
+
+  <!-- Écran d'accueil -->
+  <section id="menu" class="card">
+    <p>Choisis le niveau, le nombre de questions et la catégorie, puis un mode :</p>
+    <div class="settings">
+      <label>Niveau
+        <select id="level">
+          <option value="Rookie" selected>Rookie (30 ports)</option>
+          <option value="Expert">Expert (liste complète)</option>
+        </select>
+      </label>
+      <label>Nombre de questions
+        <select id="count">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="0">Toutes</option>
+        </select>
+      </label>
+      <label>Catégorie
+        <select id="cat">
+          <option value="all">Toutes</option>
+          <option>Network</option>
+          <option>Secure Remote</option>
+          <option>Identity</option>
+          <option>Transfert</option>
+          <option>Web &amp; Database</option>
+          <option>Share &amp; Storage</option>
+          <option>Monitoring</option>
+          <option>Messagerie</option>
+        </select>
+      </label>
+    </div>
+    <p id="erreur" class="erreur hidden"></p>
+    <div class="modes">
+      <button class="primary" data-mode="p2n" disabled>Port ➜ Protocole</button>
+      <button class="primary" data-mode="n2p" disabled>Protocole ➜ Port</button>
+      <button class="primary" data-mode="def" disabled>Définition ➜ Protocole</button>
+      <button class="primary" data-mode="mix" disabled>Mélangé</button>
+    </div>
+    <details style="margin-top:1rem">
+      <summary>Voir la fiche complète</summary>
+      <table id="fiche"></table>
+    </details>
+  </section>
+
+  <!-- Quiz -->
+  <section id="quiz" class="card hidden">
+    <div class="bar"><span id="num"></span><span id="score"></span></div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="info" id="info"></div>
+    <button id="next" class="primary hidden" style="width:100%;margin-top:1rem">Suivant</button>
+  </section>
+
+  <!-- Résultat -->
+  <section id="end" class="card hidden" style="text-align:center">
+    <h2 id="final"></h2>
+    <p id="comment"></p>
+    <button class="primary" onclick="location.reload()">Rejouer</button>
+  </section>
+
+  <footer>
+    © 2026 Romain Blanloeil · <a href="https://blanloeil.com">blanloeil.com</a>
+  </footer>
+</main>
+
+<script>
+// Données : chargées depuis ports_protocoles.csv (séparateur ;)
+// Colonnes : Port;Transport;Service;Description;Categorie;Exemple;Note;Niveau (Rookie ou Expert)
+// Port = "Aucun" pour les protocoles sans port (ICMP, ARP, FCoE)
+const CSV_FILE = "ports_protocoles.csv";
+let ALL = [], DATA = [], PORTED = [], NAMES = [], PORTS = [];
+
+function parseCsv(text) {
+  const lines = text.replace(/^\uFEFF/, "").split(/\r?\n/).filter(l => l.trim());
+  lines.shift(); // en-tête
+  return lines.map(l => {
+    const [port, proto, nom, desc, cat, ex, note, niveau] = l.split(";");
+    return { port: port === "Aucun" ? null : Number(port), proto, nom, desc, cat, ex: ex || "", note: note || "", niveau };
+  });
+}
+
+const $ = id => document.getElementById(id);
+const uniq = a => [...new Set(a)];
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const shuffle = a => {
+  const r = [...a];
+  for (let i = r.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [r[i], r[j]] = [r[j], r[i]];
+  }
+  return r;
+};
+
+let questions, idx, score, total;
+
+function showError(msg) {
+  $("erreur").textContent = msg;
+  $("erreur").classList.remove("hidden");
+}
+
+// Rookie = lignes marquées Rookie ; Expert = toutes les lignes
+function applyLevel() {
+  DATA = $("level").value === "Rookie" ? ALL.filter(d => d.niveau === "Rookie") : ALL;
+  PORTED = DATA.filter(d => d.port !== null);   // lignes avec un port
+  NAMES = uniq(DATA.map(d => d.nom));           // tous les protocoles
+  PORTS = uniq(PORTED.map(d => d.port));        // tous les ports
+
+  // Fiche récap
+  $("fiche").innerHTML = "<tr><th>Port</th><th>Protocole</th><th>Transport</th></tr>" +
+    DATA.map(d => `<tr><td>${d.port ?? "—"}</td><td>${d.nom}${d.note ? ` <small>(${d.note.toLowerCase()})</small>` : ""}</td><td>${d.proto}</td></tr>`).join("");
+}
+
+async function init() {
+  try {
+    const res = await fetch(CSV_FILE);
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    ALL = parseCsv(await res.text());
+    applyLevel();
+    $("level").onchange = applyLevel;
+    document.querySelectorAll("[data-mode]").forEach(b => {
+      b.disabled = false;
+      b.onclick = () => start(b.dataset.mode);
+    });
+  } catch (e) {
+    showError("Impossible de charger " + CSV_FILE + ". Ouvre la page via un serveur (GitHub Pages, ou « python -m http.server » en local), pas en double-cliquant sur le fichier.");
+  }
+}
+
+// --- Construction des questions -------------------------------------------
+
+// Une entrée de pool = un type de question + les lignes de données concernées
+function buildPool(mode, cat) {
+  const inCat = d => cat === "all" || d.cat === cat;
+  const pool = [];
+  if (mode === "p2n" || mode === "mix") {
+    // un port + un transport = une question (le 22 regroupe SSH, SFTP, SCP)
+    uniq(PORTED.filter(inCat).map(d => d.port + "/" + d.proto)).forEach(k =>
+      pool.push({ type: "p2n", rows: PORTED.filter(d => d.port + "/" + d.proto === k) }));
+  }
+  if (mode === "n2p" || mode === "mix") {
+    uniq(PORTED.filter(inCat).map(d => d.nom)).forEach(n =>
+      pool.push({ type: "n2p", rows: PORTED.filter(d => d.nom === n) }));
+  }
+  if (mode === "def" || mode === "mix") {
+    uniq(DATA.filter(inCat).map(d => d.nom)).forEach(n =>
+      pool.push({ type: "def", rows: DATA.filter(d => d.nom === n) }));
+  }
+  return pool;
+}
+
+function makeQuestion({ type, rows }) {
+  let text, good, wrongs;
+  if (type === "p2n") {
+    const r = rows[0];
+    text = `Quel protocole utilise le port ${r.port} (${r.proto}) ?`;
+    good = pick(rows).nom;
+    // on écarte tous les protocoles qui utilisent ce port, pour éviter une 2e bonne réponse
+    const bannis = new Set(PORTED.filter(d => d.port === r.port).map(d => d.nom));
+    wrongs = shuffle(NAMES.filter(n => !bannis.has(n))).slice(0, 3);
+  } else if (type === "n2p") {
+    const nom = rows[0].nom;
+    const ports = uniq(rows.map(d => d.port));
+    text = ports.length > 1 ? `Un port de ${nom} ?` : `Port de ${nom} ?`;
+    good = String(pick(ports));
+    wrongs = shuffle(PORTS.filter(p => !ports.includes(p))).slice(0, 3).map(String);
+  } else {
+    const nom = rows[0].nom;
+    text = `« ${pick(rows).desc} » : quel protocole ?`;
+    good = nom;
+    wrongs = shuffle(NAMES.filter(n => n !== nom)).slice(0, 3);
+  }
+  const info = rows.map(d =>
+    `${d.nom} : ${d.port === null ? "aucun port" : "port " + d.port + " (" + d.proto + ")"} — ${d.desc}` +
+    (d.note ? ` (${d.note.toLowerCase()})` : "") +
+    (d.ex ? ` — ex : ${d.ex}` : "")).join("\n");
+  return { text, good, options: shuffle([good, ...wrongs]), info };
+}
+
+// --- Déroulement -----------------------------------------------------------
+
+function start(mode) {
+  applyLevel();
+  $("erreur").classList.add("hidden");
+  const pool = buildPool(mode, $("cat").value);
+  if (!pool.length) return showError("Aucune question pour cette sélection.");
+  const n = Number($("count").value);
+  total = n === 0 ? pool.length : Math.min(n, pool.length);
+  questions = shuffle(pool).slice(0, total).map(makeQuestion);
+  idx = 0; score = 0;
+  $("menu").classList.add("hidden");
+  $("quiz").classList.remove("hidden");
+  show();
+}
+
+function show() {
+  const q = questions[idx];
+  $("num").textContent = `Question ${idx + 1}/${total}`;
+  $("score").textContent = `Score : ${score}`;
+  $("question").textContent = q.text;
+  $("info").textContent = "";
+  $("next").classList.add("hidden");
+  $("options").innerHTML = "";
+  q.options.forEach(opt => {
+    const b = document.createElement("button");
+    b.textContent = opt;
+    b.onclick = () => answer(b, q);
+    $("options").appendChild(b);
+  });
+}
+
+function answer(btn, q) {
+  document.querySelectorAll("#options button").forEach(b => {
+    b.disabled = true;
+    if (b.textContent === q.good) b.classList.add("ok");
+  });
+  if (btn.textContent === q.good) score++; else btn.classList.add("ko");
+  $("score").textContent = `Score : ${score}`;
+  $("info").textContent = q.info;
+  $("next").textContent = idx === total - 1 ? "Voir le résultat" : "Suivant";
+  $("next").classList.remove("hidden");
+}
+
+$("next").onclick = () => {
+  idx++;
+  if (idx < total) return show();
+  $("quiz").classList.add("hidden");
+  $("end").classList.remove("hidden");
+  $("final").textContent = `${score} / ${total}`;
+  const ratio = score / total;
+  $("comment").textContent = ratio >= 0.9 ? "Excellent 🔥" : ratio >= 0.6 ? "Bien, encore un tour !" : "À retravailler, courage 💪";
+};
+
+const ready = init();
+</script>
+</body>
+</html>

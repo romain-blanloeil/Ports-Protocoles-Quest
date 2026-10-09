@@ -1,6 +1,6 @@
 # Ports & Protocoles — Quest
 
-Quiz web pour réviser les **ports et protocoles réseau** vus en formation TSSR (Technicien Supérieur Systèmes et Réseaux) à l'ENI École Informatique, Nantes.
+Quiz web pour réviser les **ports et protocoles réseau**
 
 🔗 **Lien vers le site** : https://ports-protocoles-quest.blanloeil.com
 
@@ -59,10 +59,6 @@ Puis ouvrir http://localhost:8000.
 ## Déploiement
 
 Hébergé sur **Vercel** : chaque `git push` sur la branche principale redéploie le site automatiquement. Le site est servi sur un sous-domaine personnalisé (enregistrement DNS CNAME) en HTTPS.
-
-## Sources et limites
-
-Les ports et protocoles proviennent du cours et de la fiche « 27 ports essentiels » de la formation. Certains ports sont des **usages courants** plutôt que des attributions officielles (indiqués dans le quiz). En cas de doute, le registre de l'IANA fait foi.
 
 ## Auteur
 

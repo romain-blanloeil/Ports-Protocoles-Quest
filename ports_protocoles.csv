@@ -42,7 +42,7 @@ Aucun;-;ARP;Résolution d'une adresse IP en adresse MAC sur le réseau local;Net
 5432;TCP;PostgreSQL;Base de données relationnelle PostgreSQL;Web & Database;;;Rookie
 1433;TCP;TDS;Protocole de Microsoft SQL Server (Tabular Data Stream);Web & Database;;;Expert
 3128;TCP;Proxy;Serveur mandataire web (port par défaut de Squid);Web & Database;;Usage courant;Expert
-8080;TCP;Proxy;Serveur mandataire web (port alternatif HTTP courant);Web & Database;;;Expert
+8080;TCP;HTTP alternatif;Port HTTP alternatif, souvent utilisé par les proxys et les serveurs d'applications (Tomcat);Web & Database;;;Expert
 445;TCP;SMB;Partages de fichiers et d'imprimantes Windows;Share & Storage;;;Rookie
 2049;TCP;NFS;Partages de fichiers Unix et Linux (Network File System);Share & Storage;;;Expert
 4420;TCP;NVMe-oF;Accès à du stockage NVMe à travers le réseau (NVMe over Fabrics);Share & Storage;;;Expert
@@ -58,11 +58,11 @@ Aucun;-;FCoE;Fibre Channel encapsulé dans Ethernet (couche 2, sans port);Share 
 5989;TCP;CIM;Gestion standardisée du matériel (WBEM) en HTTPS;Monitoring;;;Expert
 514;UDP;Syslog;Centralisation des journaux système;Monitoring;;;Rookie
 6514;TCP;Syslog TLS;Centralisation des journaux système chiffrée avec TLS;Monitoring;;;Expert
-25;TCP;SMTP;Envoi d'emails entre serveurs de messagerie;Messagerie;;;Rookie
-587;TCP;SMTP;Envoi d'emails depuis un client (soumission, STARTTLS et authentification);Messagerie;;;Expert
-465;TCP;SMTPS;Envoi d'emails chiffré (TLS implicite);Messagerie;;;Rookie
-110;TCP;POP3;Récupération d'emails en les téléchargeant sur le poste;Messagerie;;;Rookie
-995;TCP;POP3S;Récupération d'emails chiffrée avec TLS;Messagerie;;;Expert
-143;TCP;IMAP;Accès aux emails laissés sur le serveur (synchronisés);Messagerie;;;Rookie
-993;TCP;IMAPS;Accès aux emails sur le serveur, chiffré avec TLS;Messagerie;;;Expert
-119;TCP;NNTP;Groupes de discussion Usenet;Messagerie;;;Expert
+25;TCP;SMTP;Envoi d'emails entre serveurs de messagerie;Email;;;Rookie
+587;TCP;SMTP;Envoi d'emails depuis un client (soumission, STARTTLS et authentification);Email;;;Expert
+465;TCP;SMTPS;Envoi d'emails chiffré (TLS implicite);Email;;;Rookie
+110;TCP;POP3;Récupération d'emails en les téléchargeant sur le poste;Email;;;Rookie
+995;TCP;POP3S;Récupération d'emails chiffrée avec TLS;Email;;;Expert
+143;TCP;IMAP;Accès aux emails laissés sur le serveur (synchronisés);Email;;;Rookie
+993;TCP;IMAPS;Accès aux emails sur le serveur, chiffré avec TLS;Email;;;Expert
+119;TCP;NNTP;Groupes de discussion Usenet;Email;;;Expert

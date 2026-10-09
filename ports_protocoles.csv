@@ -18,7 +18,7 @@ Aucun;-;ARP;Résolution d'une adresse IP en adresse MAC sur le réseau local;Net
 389;TCP/UDP;LDAP;Annuaire réseau (Active Directory, OpenLDAP);Identity;;;Rookie
 636;TCP;LDAPS;Annuaire réseau chiffré avec TLS;Identity;;;Rookie
 88;TCP/UDP;Kerberos;Authentification par tickets (Active Directory);Identity;;;Rookie
-464;TCP/UDP;Kerberos;Changement de mot de passe Kerberos (kpasswd);Identity;;;Expert
+464;TCP/UDP;Kerberos;Changement de mot de passe Kerberos (kpasswd);Identity;;;Rookie
 3268;TCP;Catalogue global;Recherche dans toute la forêt AD (LDAP);Identity;;;Expert
 3269;TCP;Catalogue global;Recherche dans toute la forêt AD (LDAPS);Identity;;;Expert
 135;TCP;RPC;Appels de procédures à distance Windows (Endpoint Mapper);Identity;;;Expert
@@ -65,4 +65,4 @@ Aucun;-;FCoE;Fibre Channel encapsulé dans Ethernet (couche 2, sans port);Share 
 995;TCP;POP3S;Récupération d'emails chiffrée avec TLS;Messagerie;;;Expert
 143;TCP;IMAP;Accès aux emails laissés sur le serveur (synchronisés);Messagerie;;;Rookie
 993;TCP;IMAPS;Accès aux emails sur le serveur, chiffré avec TLS;Messagerie;;;Expert
-119;TCP;NNTP;Groupes de discussion Usenet;Messagerie;;;Rookie
+119;TCP;NNTP;Groupes de discussion Usenet;Messagerie;;;Expert

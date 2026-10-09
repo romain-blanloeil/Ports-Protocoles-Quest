@@ -65,4 +65,5 @@ Aucun;-;FCoE;Fibre Channel encapsulé dans Ethernet (couche 2, sans port);Share 
 995;TCP;POP3S;Récupération d'emails chiffrée avec TLS;Email;;;Expert
 143;TCP;IMAP;Accès aux emails laissés sur le serveur (synchronisés);Email;;;Rookie
 993;TCP;IMAPS;Accès aux emails sur le serveur, chiffré avec TLS;Email;;;Expert
-119;TCP;NNTP;Groupes de discussion Usenet;Email;;;Expert
+119;TCP;NNTP;Lecture et publication de messages dans les forums Usenet (ancêtre des forums web);Email;;Quasi obsolète;Expert
+

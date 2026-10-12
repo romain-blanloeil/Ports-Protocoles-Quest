@@ -60,7 +60,7 @@ Aucun;-;FCoE;Fibre Channel encapsulé dans Ethernet (couche 2, sans port);Share 
 6514;TCP;Syslog TLS;Centralisation des journaux système chiffrée avec TLS;Monitoring;;;Expert
 25;TCP;SMTP;Envoi d'emails entre serveurs de messagerie;Email;;;Rookie
 587;TCP;SMTP;Envoi d'emails depuis un client (soumission, STARTTLS et authentification);Email;;;Expert
-465;TCP;SMTPS;Envoi d'emails chiffré (TLS implicite);Email;;;Rookie
+465;TCP;SMTPS;Envoi d'emails depuis un client, chiffré (TLS implicite);Email;;;Rookie
 110;TCP;POP3;Récupération d'emails en les téléchargeant sur le poste;Email;;;Rookie
 995;TCP;POP3S;Récupération d'emails chiffrée avec TLS;Email;;;Expert
 143;TCP;IMAP;Accès aux emails laissés sur le serveur (synchronisés);Email;;;Rookie

@@ -60,6 +60,9 @@ Puis ouvrir http://localhost:8000.
 
 Hébergé sur **Vercel** : chaque `git push` sur la branche principale redéploie le site automatiquement. Le site est servi sur un sous-domaine personnalisé (enregistrement DNS CNAME) en HTTPS.
 
-## Auteur
+## Conception
 
-Romain Blanloeil — [romain.blanloeil.com](https://romain.blanloeil.com) · [GitHub](https://github.com/romain-blanloeil)
+Conçu et développé par Romain Blanloeil, avec l'assistance de Claude (Anthropic) pour l'écriture du code.
+Choix fonctionnels, tests, mise en ligne et maintenance : Romain Blanloeil.
+
+[romain.blanloeil.com](https://romain.blanloeil.com) · [GitHub](https://github.com/romain-blanloeil)

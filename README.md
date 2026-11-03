@@ -62,7 +62,7 @@ Hébergé sur **Vercel** : chaque `git push` sur la branche principale redéploi
 
 ## Conception
 
-Conçu et développé par Romain Blanloeil, avec l'assistance de Claude (Anthropic) pour l'écriture du code.
+Conçu et développé par Romain Blanloeil (whit3roro), avec l'assistance de Claude (Anthropic) pour l'écriture du code.
 Choix fonctionnels, tests, mise en ligne et maintenance : Romain Blanloeil.
 
 [romain.blanloeil.com](https://romain.blanloeil.com) · [GitHub](https://github.com/romain-blanloeil)
